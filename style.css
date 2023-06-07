@@ -1,0 +1,257 @@
+/* NOTES IMPORTANTES 
+1 - BLOCK : de base, les navigateurs laissent presque tous les éléments en block. Cela signifie, par exemple, qu'après avoir fait une balise h2, si j'ajoute une balise h3 (ou autre balise) elle sera, par nature sur la page, placée en dessous de cette balise h2. Sans ce block de base, tous les éléments seraient collés les uns aux autres sur une même ligne. 
+Par ailleurs, les span sont comme des div mais qui ne sont pas en block, d'où l'intérêt parfois de les utiliser.
+2 - LE RESPONSIVE : Pour faire du responsive, on commence par mettre la fenêtre au maximum sur tout l'écran pour voir si la page nous convient. Ensuite, on réduit la page pour voir à quel moment ça casse. Il faut garder l'inspecteur de nav ouvert, ainsi, en résuidant la fenêtre ou en l'agrandissant, on peut voir la largeur en pixels indiquée sur l'écran en haut à droite. On peut noter les largeurs qui seronts utiles.
+*/
+
+@import url("https://fonts.googleapis.com/css2?family=Playfair:wght@600&display=swap");
+
+* {
+}
+/* L'étoile donne du style à TOUS les éléments 
+C'est une 1ère couche de base, ensuite, si j'applique des rglages à l'intérieur de sections, balises, etc... le CSS le prendra en compte */
+
+body {
+  font-family: "Playfair", sans-serif;
+  background: url(./img/cadaq.jpeg) no-repeat center/cover;
+  min-height: 100vh;
+}
+/* ! ATTENTION ! La font family ne va PAS concerner tout le body ! En effet, ne seront PAS pris en compte les INPUT et les TEXTAREA !!
+- NOTE 1: vh = view height donc 100vh = 100% de la taille de l'écran de l'utilisateur 
+- NOTE 2 : Des fois il y a un petit scroll, c'est parce que le body contient des petites marges. En les réduisant au maximum, l'image fera bel et bien la taille de l'écran de l'utilisateur 
+- NOTE 3 : On ne met pas de maximum, car en rajoutant des boîtes à l'intérieur, on veut que le body s'adapte car si les éléments ne rentrent pas tous dans une fenêtre utiliateur, il faut que le background puisse s'étendre plus bas pour couvrir tous nos éléments de la page */
+
+h1 {
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 2.5rem;
+  text-shadow: 3px 4px 2px #00000024;
+  color: pink;
+}
+/* Les polices doivent être en rem, il s'agit d'un rapport de taille sur le document. En général, la taille d'un h1 zst de 2rem */
+
+main {
+  min-height: 500px;
+  /* L'ajout de "min" au height per met à la boîte de s'ajuster verticalement si des éléments débordent de la boîte. Elle s'agrandira alors automatiquement en fonction des éléments à l'intérieur. */
+  width: 90%;
+  background-color: #f7eadab3;
+  margin: 0 auto;
+  border: 2px solid yellow;
+  border-radius: 20px;
+  box-shadow: 0 0 11px 3px rgb(91, 195, 198);
+  padding: 15px;
+}
+/* - NOTE 1 : On parle en % car cela gardera le rapport quelque soit le support de lecture (ordi, mobile, etc..) Dans notre exemple, la boite "main" occupera toujours 90% de l'écran
+En général, on ne fait ça QUE pour la LARGEUR. Car en hauteur ça peut créer de nombreux problèmes. 
+- NOTE 2 : margin permet de défnir l'emplacement de la boite verticalement et horizontalement. Dans notre exemple, 0 signifie qu'on ne met pas de marge dans la verticalité, puis "auto" permet de centrer horizontalement la box 
+- NOTE 3 : dans la console du naviugateur, on peut déployer "margin" pour voir nos valeurs de margin, y compris si on a mis "auto"
+- NOTE 4 : Si je mets 4 valeurs à border-radius (qui sert à arrondir les angles), alors on appliquera une valeur pour chaque angle, en commençant de l'angle haut gauche, puis on va dans le sens des aiguilles d'une montre 
+- NOTE 5 : si je vais tout en bas de l'inspecteur de la page dans la catégorie de style, il me montrera l'agencement de ma boite en schéma, avec padding, marging, etc...
+- NOTE 6 : Pourquoi, dans ma box main, alors que j'ai écrit "padding :15px", la marge en haut du titre n'est pas la même que la marge à droite ? C'est parce qu'en créant mon titre h2, ce dernier contient déjà des valeurs intrinsèques de marge haut et bas. Donc cette marge du H2 s'additionne avec le padding de la boite main, d'où cette différence entre les marges haut/bas et les marges gauche/droite. Ces éléments de style de base sont donnés par le navigzateur lui-même. 
+Si on souhaite éviter cela, on peut annuler tout dans le CSS grâce à l'étoile *, à laquelle on mettra des valeurs de padding et de marging à 0 comme cela : 
+    * {margin :0;
+       padding :0;}
+- NOTE 7 : em et rem sont la même chose (juste l'un est + ancien que l'autre) */
+
+h2 {
+  margin: 0;
+}
+/* Ici j'enlève les marges données de base par le navigateur aux balises h2 */
+
+.flexbox,
+.grid,
+.absolute {
+  border: 2px solid skyblue;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 20px;
+  min-height: 150px;
+}
+
+/* FLEXBOX 
+  Sert à répartir équitablement des éléments sur la page */
+
+/* NOTE IMPORTANTE : l'ordre des balises a une importance dans l'exécution. On va donc toujours mettre la classe de ul avant la classe li */
+
+.flexbox ul {
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+}
+/* - NOTE 1 : Ici on a utilisé le flexbox ul car il faut un parent à nos li pour pouvoir les aligner. En effet, on aligne des éléments à l'intérieur d'un parent. C'est à la classe de ce parent qu'on attribue l'alignement des éléments qu'il contient. 
+- NOTE 2 : le flex permet d'aligner les élements sur la même ligne 
+- NOTE 3 : dans l'inspecteur du nav, sur la balise contenant du flexbox, il y a un petit outil qui nous permet de voir et tester tous les alignements possibles 
+- NOTE 4 : le space-around permet que l'alignement et l'espacement restent cohérent quelques soit la taille de la fenêtre */
+
+.flexbox li {
+  list-style: none;
+  /* ci-dessus on a enlevé les petits points de la liste */
+  height: 160px;
+  width: 160px;
+  margin: 10px;
+  background-color: #ffa50052;
+
+  /* ci-dessous : centrer un unique élément verticalement et horizontalement */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* On vient ainsi de centrer horizontalementle texte à l'intérieur de notre boîte grâce à justify-content, et idem verticalement grâce à align-items */
+}
+
+/* GRID */
+.grid-container {
+  display: grid;
+  grid-template-columns: 30% 70%;
+}
+/* - NOTE 1 = Grâce au display grid, dans l'inspecteur du nav, je peux cliquer sur grid et ainsi voir mon grid 
+- NOTE 2 ; le grid template columns sert à répartir en % la place prise pour chaque élément. On met autant de pourcentage que de nombre d'éléments présents dans le parent. */
+
+.grid img {
+  width: 80%;
+  margin-top: 20px;
+  display: block;
+}
+/* - NOTE 1 : Le Display:block permet de dire que la balise doit occuper tout l'espace qui lui est alloué dans sa boîte (cela comprend aussi les marges)
+- NOTE 2 : la width à 80% permet de dire que dans cet espace occupé par cette balise iamge (donc tout le block), l'image doit avoir 80% de sa taille initiale, adaptable aussi à la taille de l'écran */
+
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas:
+    "i1 i2"
+    "ta ta"
+    "vi bt";
+}
+/* - NOTE 1 : le Grid va nous permettre de voir l'agencement des éléments et de construire différement qu'au fex, en agençanr les éléments comme sur une grille. On peut la voir en passant sur la balise concernée dans l'inspecteur du nav et en cliquant sur grid.
+- NOTE 2 : Ici je ne mets pas de point car je veux que cela concerne TOUTES les balises de type formulaire 
+- NOTE 3 : le gtc et le gtr s'expriment en fr (fractions) pour exprimer comment se répartir 
+- NOTE 4 : avec le gta, je lui indique des noms pour mes 3 répartitions (données par mes 3 fractions de 3 lignes avec le gtr). Il s'agit bien de créer un schéma
+On a ainsi choisi nos noms nous-mêmes ainsi : "i1 i2" pour input1 et input 2 sur la 1ere ligne composée de 2 colonnes. "ta ta" pour 2 text area sur la 2eme ligne composée de 2 colonnes. "vi bt" pour la 3eme ligne composée de 2 colonnes (1 vide et 1 bouton) */
+
+input,
+textarea {
+  margin: 5px;
+  border: 1px solid darkblue;
+  padding: 10px;
+  font-size: 1.1rem;
+  font-family: "Playfair", sans-serif;
+  border-radius: 7px;
+}
+
+textarea {
+  grid-area: ta;
+  height: 40px;
+  resize: none;
+}
+/* - NOTE 1 : Ici, avec le grid-area, on lui indique que la balise textarea se placera à l'emplacement "ta" que nous avons défini dans notre schéma du gta plus haut. 
+Comme on a rentré ta sur les 2 colonnes dans notre schéma, le textarea (à qui on a attribué le nom "ta" va donc occupé les 2 emplacements nommés "ta", soit toute la ligne. 
+- NOTE 2 : le resize:none empêche l'utilisateur de casser la page de la textarea. Il faut savoir qu'en créant une textarea, il s existe un bouton dans l'angle bas droite de la fenêtre pour l'utilisateur, afin de lui permettre de changer la taille de cette case. Mieux vaut donc lui empêcher cette option. */
+
+#btn-submit {
+  grid-area: bt;
+  cursor: pointer;
+  background: orange;
+  transition: 0.2s;
+}
+/* - NOTE 1 : On indique ici son emplacement dans le tableau fait au gta 
+   - NOTE 2 : le pointer permet de changer le curseur en main en passant au dessus du bouton 
+   - NOTE 3 : la transition est souvent liée à des effets comme Hover. On met souvent la transition dans la balise d'origine de l'élément, et non dans la balsie de l'effet. */
+
+#btn-submit:hover {
+  background: red;
+  color: white;
+}
+/* Le hover permet de proposer une action au survol de la balise. Valable sur absolument n'importe quelle balise (Attention : ne pas oublier les ":" entre le nom de l'Id et Hover) */
+
+/* ABSOLUTE */
+.absolute {
+  position: relative;
+}
+
+#circle1 {
+  height: 80px;
+  width: 80px;
+  background: orange;
+  position: absolute;
+  border-radius: 150px;
+  top: -20px;
+  right: -20px;
+}
+/* - NOTE 1 : On a créé un cercle, simplement en faisant un élément d'une hauteur et largeur identique, et en lui mettant des border-radius. 
+  - NOTE 2 : La position Absolute va permettre de positionenr un élément par rapport à la page. Si je tape top:0, le cercle ira se coller en haut de la page. 
+  - NOTE 3 : je cherche à placer mon cercle en haut à droite de ma box absolute. La 1ère chose est de dire au parent (donc le .absolute) qu'il a une position relative. En effet, pour notre cercle, qui est contenu dans la box abolute, si cette box est en position relative, alors cela donnera une nouvelle frontière à notre cercle (qui est un élément à l'intérieur de la box nommée absolute). A partir de ce moment là, le cercle ne sera pas en position absolue par rapport au body de la page, mais par rapport à son parent (ici la box nommée absolute).
+  Désormais, quand je mets top:0 sur mon cercle, il vient se coller en haut de la box nommée absolute 
+  [Autrement dit, sans élément en Relative, de base, l'élément zn absolute l'est par rapport au body] */
+
+#circle2 {
+  height: 40px;
+  width: 40px;
+  border-radius: 150px;
+  background: teal;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+}
+/* NOTE : lorsque je mets left 50%, l'élément n'est pas bien centré dans la box. Ce n'est pas son centre qui se retrouve au milieu de la box, mais l'un de ses côtés. 
+En absolute, pour pouvoir bien centré un élément par son centre, on devra ajouté trandform:translate(-50%), ce qui signifiera le milieu de lui-même, soit son centre. Ce sera alros ce centre d'élement qui pourra se centrerr dans la box (en le décalant de 50% par rapport à un bord de box). C'est un peu tordu, mais cela fonctionne ainsi. */
+
+/* / */
+
+/* / */
+
+/* ---------------------------------------------------------- */
+
+/* / */
+
+/* RESPONSIVE */
+@media screen and (max-width: 770px) {
+  .grid-container {
+    display: block;
+  }
+  .grid-container img {
+    width: 40%;
+  }
+}
+/* Ci-dessus, on va dire que lorsque la largeur de la fenêtre est inférieure à 900px (largeur visible en haut à droite de la fenêtre, en la réduisant ou en l'agrandissant, uniquement avec l'inspecteur du nav ouvert !), alors :
+- on va mettre le grid-container en block (cela signifie que les éléments qu'il contient se placeront verticalement et ne seront plus alignés sur une même ligne 
+- on va adapter la largeur de l'image pour ne pas qu'elle soit trop grosse */
+
+@media screen and (max-width: 600px) {
+  .flexbox ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  form {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas:
+      "i1"
+      "i2"
+      "ta"
+      "bt";
+  }
+
+  input,
+  textarea {
+    font-size: 0.8rem;
+  }
+}
+/* Ci-dessus, on dit que sous les 600px de largeur, alors :
+- concernant les 3 boîtes du parent flexbox ul : les éléments s'agenceront sur une colonne qui sera centrée sur la largeur 
+- concernant le firmulaire : on refait son schéma pour qu'il se compose de lignes d'une seule colonne, agencées de la manière dont on le décrit par le gta 
+- concernant les imput et textarea : la police doit être plus petite */
+
+/* / */
+
+/* ---------------------------------------------------------- */
+
+/* / */
+
+/* COMMENT DEBUGGER EN CSS 
+Avec l'étoile * (qui correspond à ALL), on va pouvoir voir tous nos élements de la manière suivante :
+* {
+  border : red 
+} 
+ En effet, en faisant ainsi, cela va entourer de rouge tous nos éléments, ce sera pratique pour voir notre construction, même si aujourd'hui on passe plutôt par la console de l'inspecteur du navigateur */
